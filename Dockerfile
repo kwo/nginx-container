@@ -1,13 +1,13 @@
 FROM alpine:3.22.2
 
-# Set environment variable for CDN basic auth
-ENV AUTH_TOKEN=""
+# Set environment variables for basic auth (to be used by entrypoint)
+ENV BASIC_AUTH_USERNAME=""
+ENV BASIC_AUTH_PASSWORD=""
 
 # Install nginx via package manager
 RUN apk add --no-cache nginx gettext && \
   mkdir -p /run/nginx && \
   mkdir -p /var/tmp/nginx
-
 
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf

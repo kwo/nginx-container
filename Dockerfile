@@ -1,15 +1,15 @@
 FROM alpine:3.22.2
 
 # Install nginx via package manager
-RUN apk add --no-cache nginx
+RUN apk add --no-cache nginx \
+  && mkdir -p /data/html
 
-# Copy custom nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf   /etc/nginx/nginx.conf
 COPY default.conf /etc/nginx/http.d/default.conf
-
-# Copy and set up entrypoint script
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+COPY html/4*.html /var/lib/nginx/html
+COPY html/5*.html /var/lib/nginx/html
+COPY html/index.html /data/html
+COPY entrypoint.sh /entrypoint.sh
 
 # Mount data directory as volume
 VOLUME /data
@@ -17,7 +17,7 @@ VOLUME /data
 EXPOSE 80
 
 # Set entrypoint to run before CMD
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Start nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]

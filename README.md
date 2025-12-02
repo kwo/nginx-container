@@ -16,14 +16,6 @@ This NGINX container is configured with:
 - **Security Headers**: X-Frame-Options, X-Content-Type-Options, X-XSS-Protection
 - **Gzip Compression**: Enabled for common text and media types
 
-## Volume Structure
-
-The container uses a single `/data` volume with three subdirectories:
-
-- **`/data/html`** - Static files and web content (served from this directory)
-- **`/data/logs`** - NGINX access and error logs
-- **`/data/run`** - NGINX PID file
-
 ## Authentication
 
 This container uses HTTP Basic Authentication via an htpasswd file. The authentication is optional:
@@ -41,20 +33,6 @@ podman build -t nginx .
 ```
 
 ## Preparation
-
-### Required Files
-
-Create the following difrectories in the data directory:
-```bash
-mkdir -p /data/{html,logs,run}
-```
-
-Place the following files in `/data/html`:
-- `index.html` - Default index page
-- `401.html` - Unauthorized error page
-- `403.html` - Forbidden error page
-- `404.html` - Not found error page
-- `50x.html` - Server error page
 
 ### Creating an htpasswd file
 
